@@ -5,7 +5,7 @@
 // "Play Again?" button would reset the scores and call again game().
 // I need three do-while statements. One if player and the computer tie, one if the player loses and one if the player wins. 
 
-let rounds = 0;
+/*let rounds = 0;
 
 function game() {
 
@@ -75,5 +75,45 @@ function game() {
     
     }
     scoreComparison(playerScore, computerScore);
+*/
+
+// Get values
+const won = document.querySelector('.won');
+const lost = document.querySelector('.lost');
+const rounds = document.querySelector('.rounds');
+const buttons = document.querySelector('.button-container');
+const rock = document.querySelector('.rock')
+const paper = document.querySelector('.paper')
+const scissors = document.querySelector('.scissors')
+
+let totalRounds = 0
+
+
+// Define computer choice
+function computerChoice() {
+    let randomNumber = Math.floor((Math.random()) * 3);
+    switch (randomNumber) {
+        case 0:
+            return 'Rock';
+        case 1:
+            return 'paper';
+        case 2:
+            return 'scissors';
+    }
+}
+    
+function scoreComparison() {
+    lost.innerHTML = `Lost : ${lostRounds}`;
+    won.innerHTML = `Won : ${wonRounds}`
 }
 
+// Add event listeners
+rock.addEventListener('click', playRound = () => {
+    let computer = computerChoice();
+    if (computer === rock.innerHTML) {
+        totalRounds++
+        rounds.innerHTML = `Rounds: ${totalRounds}`
+    } else if (computer != rock.innerHTML) {
+        console.log('its not the same choice')
+    }
+});
