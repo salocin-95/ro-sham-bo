@@ -5,78 +5,6 @@
 // "Play Again?" button would reset the scores and call again game().
 // I need three do-while statements. One if player and the computer tie, one if the player loses and one if the player wins. 
 
-/*let rounds = 0;
-
-function game() {
-
-    let playerScore = 0;
-    let computerScore = 0;
-    const messageTie = 'It`s a tie!';
-    const messageWin = 'You won!';
-    const messageLost = 'You lost!';
-
-    while (rounds < 5) {
-    rounds++
-    function getComputerChoice() {
-        let randomNumber = Math.floor((Math.random()*3))
-        let computerChoice = '';
-        if (randomNumber === 0) {
-            return computerChoice = 'rock';
-        } else if (randomNumber === 1)  {
-            return computerChoice = 'paper';
-        } else if (randomNumber === 2) {
-            return computerChoice = 'scissors';
-        }
-    }
-
-
-    function playRound(playerSelection, computerSelection) {
-        if (playerSelection === computerSelection) {
-            playerScore++
-            computerSelection++
-            console.log('You`ve tied this round!');
-        } else if (playerSelection === 'rock' && computerSelection === 'paper' ) {
-            computerScore++;
-            console.log('You`ve lost this round!');
-        } else if (playerSelection === 'paper' && computerSelection === 'scissors') {
-            computerScore++;
-            console.log('You`ve lost this round!');
-        } else if (playerSelection === 'scissors' && computerSelection === 'rock') {
-            computerScore++;
-            console.log('You`ve lost this round!');
-        } else if (playerSelection === 'paper' && computerSelection === 'rock' ) {
-            playerScore++;
-            console.log('You`ve won this round!');
-        } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
-            playerScore++;
-            console.log('You`ve won this round!');
-        } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
-            playerScore++;
-            console.log('You`ve won this round!');
-        }
-
-
-    }  
-
-    const playerSelection = prompt('¡Choose Rock, Paper or Scissors!').toLowerCase(); 
-    const computerSelection = getComputerChoice();
-
-    function scoreComparison(playerScore, computerScore) {
-        if (playerScore === computerScore) {
-            console.log(messageTie);
-        } else if (playerScore < computerScore) {
-            console.log(messageLost); 
-        } else if (playerScore > computerScore) {
-            console.log(messageWin);
-        }
-    }
-
-    playRound(playerSelection, computerSelection)
-    
-    }
-    scoreComparison(playerScore, computerScore);
-*/
-
 // Get values
 const won = document.querySelector('.won');
 const lost = document.querySelector('.lost');
@@ -85,8 +13,15 @@ const buttons = document.querySelector('.button-container');
 const rock = document.querySelector('.rock')
 const paper = document.querySelector('.paper')
 const scissors = document.querySelector('.scissors')
+const results = document.querySelector('.results')
+const resultsLost = document.querySelector('.round-lost')
+const resultsWon = document.querySelector('.round-won')
 
-let totalRounds = 0
+let totalRounds = 0;
+let totalWon = 0;
+let totalLost = 0;
+let roundsWon = 0;
+let roundsLost = 0;
 
 
 // Define computer choice
@@ -96,24 +31,82 @@ function computerChoice() {
         case 0:
             return 'Rock';
         case 1:
-            return 'paper';
+            return 'Paper';
         case 2:
-            return 'scissors';
+            return 'Scissors';
     }
 }
     
-function scoreComparison() {
-    lost.innerHTML = `Lost : ${lostRounds}`;
-    won.innerHTML = `Won : ${wonRounds}`
+function scoreComparison(rounds) {
+    if (rounds === 5) {
+        if (totalLost > totalWon) {
+            roundsLost++
+            results.innerHTML = `You lost this round`
+            resultsLost.innerHTML =  `Rounds lost: ${roundsLost}`
+        }
+        if (totalLost < totalWon) {
+            roundsWon++
+            results.innerHTML = `You won this round`
+            resultsWon.innerHTML =  `Rounds won: ${roundsWon}`
+        }
+        totalRounds = 0;
+        totalLost = 0;
+        totalWon = 0;
+    }
 }
 
 // Add event listeners
 rock.addEventListener('click', playRound = () => {
     let computer = computerChoice();
     if (computer === rock.innerHTML) {
-        totalRounds++
-        rounds.innerHTML = `Rounds: ${totalRounds}`
-    } else if (computer != rock.innerHTML) {
-        console.log('its not the same choice')
+        results.innerHTML = `It's a tie!`
+    } else if (computer === 'Paper') { 
+        totalLost++
+        results.innerHTML = ('You lost!')
+        lost.innerHTML = `Lost: ${totalLost}`;
+    } else if (computer === 'Scissors') {
+        totalWon++
+        won.innerHTML = `Won: ${totalWon}`
+        results.innerHTML = `You won!`
     }
+    totalRounds++
+    rounds.innerHTML = `Rounds: ${totalRounds}`;
+    scoreComparison(totalRounds);
+});
+
+paper.addEventListener('click', playRound = () => {
+    let computer = computerChoice();
+    if (computer === paper.innerHTML) {
+        results.innerHTML = `It's a tie!`
+    } else if (computer === 'Scissors') {
+        totalLost++
+        results.innerHTML = ('You lost!')
+        lost.innerHTML = `Lost: ${totalLost}`;
+    } else if (computer === 'Rock') {
+        totalWon++
+        won.innerHTML = `Won: ${totalWon}`
+        results.innerHTML = `You won!`
+    }
+    totalRounds++
+    rounds.innerHTML = `Rounds: ${totalRounds}`;
+    scoreComparison(totalRounds);
+});
+
+
+scissors.addEventListener('click', playRound = () => {
+    let computer = computerChoice();
+    if (computer === scissors.innerHTML) {
+        results.innerHTML = `It's a tie!`
+    } else if (computer === 'Rock') {
+        totalLost++
+        results.innerHTML = ('You lost!')
+        lost.innerHTML = `Lost: ${totalLost}`;
+    } else if (computer === 'Paper') {
+        totalWon++
+        won.innerHTML = `Won: ${totalWon}`
+        results.innerHTML = `You won!`
+    }
+    totalRounds++
+    rounds.innerHTML = `Rounds: ${totalRounds}`;
+    scoreComparison(totalRounds);
 });
